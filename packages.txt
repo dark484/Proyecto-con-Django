@@ -1,0 +1,37 @@
+This small document explains which packages are currently available and how to install/upgrade.
+
+Django 1.4(obviously - see README.txt for basic usage)
+Setuptools-0.6c11(the latest version as of this release)
+pip-1.1(the latest version as of this release)
+
+To upgrade Django as new versions are available:
+
+C> easy_install -U django
+
+To install any python-only package:
+
+C> easy_install django-manifest
+
+Replace "django-manifest" with any python package which doesn't require a C module.
+
+easy_install are added to your PATH when you launch "start.bat"
+
+Packages can also be manually installed via their "setup.py"
+
+C> python setup.py install
+
+Run this inside the extracted package you downloaded.  Most source packages are in Tar.gz format.
+To extract a tar.gz using Python, do the following:
+
+C\Downloads> python
+>>> import tarfile
+>>> tar = tarfile.open("fancypackage-0.5.4.tar.gz")
+>>> tar.extractall()
+>>> tar.close()
+>>> exit()
+C\Downloads> cd fancypackage-0.5.4
+C\Downloads\fancypackage-0.5.4> python setup.py install
+
+This will work for most packages downloaded from an authors website or github.
+
+I hope to include an untar command in a future release(of course it will be made in Python).

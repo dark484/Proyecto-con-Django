@@ -1,0 +1,122 @@
+ExeMaker
+$Id: README 289 2004-10-11 22:32:18Z fredrik $
+
+ExeMaker release 1.2 (October 12, 2004)
+
+--------------------------------------------------------------------
+Introduction
+--------------------------------------------------------------------
+
+The ExeMaker utility takes a Python script, installs it in a given
+directory, and creates an EXE file in the same directory.  When you
+run the EXE, it locates and loads a suitable Python interpreter DLL,
+and runs the script.
+
+Usage:
+
+	> exemaker myscript.py c:/bin
+	c:/bin/myscript.exe ok
+	c:/bin/myscript.py ok
+
+	> myscript
+	welcome to my script!
+
+The ExeMaker is designed to quickly turn small scripts into command
+line utilities, so you can use them (and distribute them) without
+having to set up PY associations, create BAT files, or fool around
+with more sophisticated bundling tools.
+
+For more information on this tool, see:
+
+        http://effbot.org/zone/exemaker.htm
+
+--------------------------------------------------------------------
+Installation
+--------------------------------------------------------------------
+
+1. Unpack the ZIP archive.
+
+2. Copy the exemaker.py and exemaker.exe files to a suitable directory
+   on your path.
+
+3. To check that the toolkit works, run "exemaker" without any arguments.
+   You should get output similar to:
+
+	Usage:
+
+	    exemaker [-i interpreter] scriptname [target-dir]
+
+	installs the given script in the target directory.
+
+	...
+
+   If you get an error dialogue, make sure that the DLL or EXE file
+   listed on the first first line of exemaker.py can be found on your
+   path.  This line usually looks like:
+
+	#!python.exe
+
+   You can add a path, if necessary (but if you do, the Python DLL
+   used by the EXE file must be in the same directory, or at least
+   be found on the path).  Example:
+
+        #!/python23/python.exe
+
+   You can also point directly to a Python DLL, if you prefer.
+   Examples:
+
+        #!python23.dll
+        #!/windows/system32/python24.dll
+        #!/py21/python21.dll
+
+--------------------------------------------------------------------
+Changes
+--------------------------------------------------------------------
+
+(1.2 released)
+
+- Added EXE support.  If you specify a Python executable (with or
+  without a path), the loader will inspect that file to figure out
+  what DLL to use.  If you specify a path for the executable, the
+  loader looks for the DLL in the same directory as the executable,
+  before searching along the path.
+
+(1.1 released)
+
+- Don't call Py_SetPythonHome() if there's no Python library
+  directory relative to the Python DLL (in this case, Python's
+  own GetPath will figure things out all by itself).
+
+(1.0 released)
+
+--------------------------------------------------------------------
+Software License
+--------------------------------------------------------------------
+
+The ExeMaker utility is:
+
+Copyright (c) 2002-2004 by Fredrik Lundh
+Copyright (c) 2002-2004 by Secret Labs AB
+
+By obtaining, using, and/or copying this software and/or its
+associated documentation, you agree that you have read, understood,
+and will comply with the following terms and conditions:
+
+Permission to use, copy, modify, and distribute this software and its
+associated documentation for any purpose and without fee is hereby
+granted, provided that the above copyright notice appears in all
+copies, and that both that copyright notice and this permission notice
+appear in supporting documentation, and that the name of Secret Labs
+AB or the author not be used in advertising or publicity pertaining to
+distribution of the software without specific, written prior
+permission.
+
+SECRET LABS AB AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO
+THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS.  IN NO EVENT SHALL SECRET LABS AB OR THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+--------------------------------------------------------------------

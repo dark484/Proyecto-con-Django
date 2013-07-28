@@ -1,0 +1,31 @@
+# $Id: makefile.vc 284 2004-10-10 19:39:22Z fredrik $
+# exemaker build file
+
+all: exemaker.exe
+
+install: exemaker.exe
+
+clean:
+	-erase *.exe
+	-erase *.res
+	-erase *.obj
+	-erase *~
+
+CC=	cl
+CFLAGS=	-W3 -O1 -GF -Gs -Gr -nologo -DWINDOWS -MD
+
+# -W3 max warnings
+# -O1 minimize size
+# -GF read-only string constants
+# -Gs disable stack checking calls
+# -Gr fastcall calling convention
+# -MD link against MSVCRT.DLL (also required by Python)
+
+OBJS=
+
+exemaker.exe: exemaker.c exemaker.rc $(OBJS)
+	$(RC) exemaker.rc
+	$(CC) $(CFLAGS) -o exemaker.exe exemaker.c\
+		exemaker.res $(OBJS)\
+		user32.lib gdi32.lib shell32.lib
+	-upx --best exemaker.exe
