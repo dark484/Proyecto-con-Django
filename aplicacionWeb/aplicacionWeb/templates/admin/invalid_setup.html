@@ -1,0 +1,14 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Inicio' %}</a>
+&rsaquo; {{ title }}
+</div>
+{% endblock %}
+
+{% block content %}
+<p>{% trans "Existe algo incorrecto con la configuración de la base de datos. Asegurese de que se hayan creado las tablas correctas, y asegurese de que la base de datos sea accesible por el usuario." %}</p>
+{% endblock %}

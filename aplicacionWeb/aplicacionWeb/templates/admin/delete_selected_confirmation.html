@@ -1,0 +1,49 @@
+{% extends "admin/base_site.html" %}
+{% load i18n l10n %}
+{% load url from future %}
+{% load admin_urls %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Inicio' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label=app_label %}">{{ app_label|capfirst|escape }}</a>
+&rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+&rsaquo; {% trans 'Eliminar múltiples objetos' %}
+</div>
+{% endblock %}
+
+{% block content %}
+{% if perms_lacking or protected %}
+    {% if perms_lacking %}
+        <p>{% blocktrans %}El eliminar {{ objects_name }} podría resultar en la eliminación de los objetos relacionados a este, sin embargo tu cuenta no tiene permisos para eliminar los siguientes tipos de objetos:{% endblocktrans %}</p>
+        <ul>
+        {% for obj in perms_lacking %}
+            <li>{{ obj }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% if protected %}
+        <p>{% blocktrans %}El eliminar {{ objects_name }} requerirá eliminar los siguientes objetos protegidos:{% endblocktrans %}</p>
+        <ul>
+        {% for obj in protected %}
+            <li>{{ obj }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% else %}
+    <p>{% blocktrans %}Está seguro de eliminar {{ objects_name }}? Los siguientes objetos relacionados serán eliminados:{% endblocktrans %}</p>
+    {% for deletable_object in deletable_objects %}
+        <ul>{{ deletable_object|unordered_list }}</ul>
+    {% endfor %}
+    <form action="" method="post">{% csrf_token %}
+    <div>
+    {% for obj in queryset %}
+    <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk|unlocalize }}" />
+    {% endfor %}
+    <input type="hidden" name="action" value="delete_selected" />
+    <input type="hidden" name="post" value="yes" />
+    <input type="submit" value="{% trans "Si, Estoy seguro" %}" />
+    </div>
+    </form>
+{% endif %}
+{% endblock %}
